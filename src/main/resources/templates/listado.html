@@ -96,6 +96,19 @@
                         <th>Acciones</th>
                     </tr>
                 </thead>
+               <tbody>
+    <tr th:each="admin : ${administradores}">
+        <td th:text="${admin.idAdministrador}">ID</td>
+        <td th:text="${admin.nombre}">Nombre</td>
+        <td th:text="${admin.apellidos}">Apellidos</td>
+        <td th:text="${admin.correo}">Correo</td>
+        <td>
+            <a th:href="@{/eliminar/}+${admin.idAdministrador}" class="btn btn-danger">
+                Eliminar
+            </a>
+        </td>
+    </tr>
+</tbody> 
 
                 <tbody>
 

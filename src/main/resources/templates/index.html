@@ -70,6 +70,12 @@ body{
     <div class="menu">
         <a th:href="@{/}" class="menu-item">Inicio</a>
         <a th:href="@{/administrador/listado}" class="menu-item">Administradores</a>
+
+        <!-- RF-2 -->
+        <a th:href="@{/estudiante/listado}" class="menu-item">Estudiantes</a>
+
+        <!-- RF-3 -->
+        <a th:href="@{/perfil/listado}" class="menu-item">Perfiles</a>
     </div>
 
 </div>
@@ -83,11 +89,23 @@ body{
 <h2>Bienvenido al sistema EduRefuerzo</h2>
 
 <p>
-Sistema para la gestión de  contenido académico.
+Sistema para la gestión de contenido académico.
 </p>
 
 <a th:href="@{/administrador/listado}" class="btn btn-primary">
 Ir a Administradores
+</a>
+
+<br><br>
+
+<!-- acceso directo RF-2 -->
+<a th:href="@{/estudiante/listado}" class="btn btn-success">
+Ir a Estudiantes
+</a>
+
+<!-- acceso directo RF-3 -->
+<a th:href="@{/perfil/listado}" class="btn btn-secondary">
+Ir a Perfiles
 </a>
 
 </div>

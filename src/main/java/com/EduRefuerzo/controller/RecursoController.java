@@ -2,11 +2,13 @@ package com.EduRefuerzo.controller;
 
 import com.EduRefuerzo.domain.Recurso;
 import com.EduRefuerzo.service.RecursoService;
+import com.EduRefuerzo.service.TemaService;
+import com.EduRefuerzo.service.FavoritoService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import com.EduRefuerzo.service.TemaService;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -19,10 +21,24 @@ public class RecursoController {
     @Autowired
     private TemaService temaService;
 
+    @Autowired
+    private FavoritoService favoritoService;
+
     @GetMapping("/listado")
     public String listado(Model model) {
         var recursos = recursoService.getRecursos();
+
+        Long idEstudiante = 1L; 
+
+        var favoritos = favoritoService.getFavoritosPorEstudiante(idEstudiante);
+
+        var idsFavoritos = favoritos.stream()
+                .map(f -> f.getRecurso().getIdRecurso())
+                .toList();
+
         model.addAttribute("recursos", recursos);
+        model.addAttribute("idsFavoritos", idsFavoritos);
+
         return "listadoRecursos";
     }
 
@@ -36,6 +52,7 @@ public class RecursoController {
     @PostMapping("/guardar")
     public String recursoGuardar(Recurso recurso, RedirectAttributes redirectAttributes) {
         boolean esNuevo = (recurso.getIdRecurso() == null);
+
         recursoService.save(recurso);
 
         if (esNuevo) {
@@ -58,8 +75,10 @@ public class RecursoController {
     public String recursoModificar(Recurso recurso, Model model) {
         recurso = recursoService.getRecurso(recurso);
         var temas = temaService.getTemas();
+
         model.addAttribute("recurso", recurso);
         model.addAttribute("temas", temas);
+
         return "formularioRecurso";
     }
 }
